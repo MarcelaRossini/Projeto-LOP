@@ -1,0 +1,31 @@
+var x = 30;
+var y = 225;
+
+function setup() {
+  createCanvas(450, 450);
+}
+
+// Função draw é executada o tempo todo
+// A "ellipse" representa o jogador
+// O "square" representa o obstáculo
+// O "keyIsDown" representa a movimentação do jogador 
+
+function draw() {
+  background(190);
+  
+  if (keyIsDown(RIGHT_ARROW)){
+    x = x + 1;
+  }
+  if (keyIsDown(LEFT_ARROW)){
+    x = x - 1;
+  }
+  if (keyIsDown(UP_ARROW)){
+    y = y - 1;
+  }
+  if (keyIsDown(DOWN_ARROW)){
+    y = y + 1;
+  }
+  ellipse(x, y, 35, 35);
+  
+  square(290, 211, 30);
+}
