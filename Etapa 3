@@ -1,0 +1,42 @@
+// Variáveis para mover o jogador
+var x = 290;
+var y = 238;
+
+// Variáveis para mover o obstáculo
+var xo = 0;
+var yo = 225;
+
+
+function setup() {
+  createCanvas(450, 450);
+}
+
+// Função draw é executada o tempo todo
+// A "ellipse" representa o jogador
+// O "square" representa o obstáculo
+
+function draw() {
+  background(190);
+  
+  if (keyIsDown(RIGHT_ARROW)){
+    x = x + 2;
+  }
+  if (keyIsDown(LEFT_ARROW)){
+    x = x - 2;
+  }
+  if (keyIsDown(UP_ARROW)){
+    y = y - 2;
+  }
+  if (keyIsDown(DOWN_ARROW)){
+    y = y + 2;
+  }
+  ellipse(x, y, 35, 35);
+  
+  square(xo, yo, 30);
+  xo = xo + 2;
+  if (xo > 450){
+     xo = -random(1000); 
+     console.log(xo);
+  }
+  
+}
