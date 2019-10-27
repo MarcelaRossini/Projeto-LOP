@@ -1,0 +1,74 @@
+// Variáveis para mover o jogador
+var x = 225;
+var y = 400;
+var raio = 35;
+
+// Variáveis para o disparo do jogador
+var xd = 0;
+var yd = 0;
+var estadoDisparo = false;
+
+// Variáveis para mover o obstáculo
+var xo = 0;
+var yo = 180;
+var raio1 = 30;
+
+//Variáveis para informações do jogo
+var vidas = 4;
+var pontos = 0;
+var nivel = 1;
+
+function setup() {
+  createCanvas(450, 450);
+};
+
+// Função draw é executada o tempo todo
+
+function draw() {
+  background(0, 200, 200);
+  
+  fill(0, 0, 0);
+  textSize(20);
+  text('Nível: ' + nivel , 5, 20);
+  text('Pontos: ' + pontos, 170, 20);
+  text('Vidas: ' + vidas, 373, 20);
+  
+  if (keyIsDown(RIGHT_ARROW)){
+    x = x + 2;
+  };
+  if (keyIsDown(LEFT_ARROW)){
+    x = x - 2;
+  };
+  if (keyIsDown(UP_ARROW)){
+    y = y - 2;
+  };
+  if (keyIsDown(DOWN_ARROW)){
+    y = y + 2;
+  };
+  fill(200, 30,50);
+  ellipse(x, y, raio, raio);
+  if (keyIsDown(CONTROL) && estadoDisparo == false){
+     xd = x;
+     yd = y;
+     estadoDisparo = true;
+  };
+  if (estadoDisparo == true){
+     ellipse(xd, yd, 5, 5);
+     yd = yd - 8;
+     if (yd < 0){
+        estadoDisparo = false;
+     };
+  };
+  
+  fill(0, 30, 50);
+  ellipse(xo, yo, raio1, raio1);
+  xo = xo + 2;
+  if (xo > 450){
+     xo = -random(1000); 
+  };
+  if(dist(x, y, xo, yo) < raio + raio1) {
+    x = 225;
+    y = 400;
+    vidas = vidas - 1;
+  };
+};
