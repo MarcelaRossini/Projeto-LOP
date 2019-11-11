@@ -1,0 +1,96 @@
+//Variáveis para os inimigos
+var vetorX = [];
+var vetorY = [];
+var qntdInimigos = 5;
+var vetorDist = [];
+var vetorVeloc = [];
+var vetorCor = [];
+
+//Variáveis para o jogador
+var jog = { x:200, y:300, raio:30 };
+var disp = { x:0, y:0, raio:6, estadoDisp: false };
+
+//Variáveis para as imagens do jogo
+let imgJog;
+function preload(){
+  imgJog = loadImage ('Nave 35.png');
+};
+
+
+
+//Variáveis de informações do jogo
+var info = { nivel:1, pontos:0, vidas:4, barreiraPontos: 1500};
+
+function setup() {
+  createCanvas(400, 400);
+  for (var i=0; i < qntdInimigos; i++){
+      vetorX[i] = random (0, 400);
+      vetorY[i] = random (0, 400);
+      vetorDist[i] = random (10, 25);
+      vetorVeloc[i] = random (1, 3);
+      vetorCor[i] = random (0, 255);
+  };
+};
+
+function draw() {
+  background(200,0,0);
+  
+  for (var i=0; i < qntdInimigos; i++){
+      vetorY[i] = vetorY[i] + vetorVeloc[i];
+      fill(vetorCor[i]);
+      ellipse(vetorX[i], vetorY[i], vetorDist[i], vetorDist[i]);
+      if (vetorY[i] > 400){
+         vetorY[i] = random(-400, -100);
+      };
+      if(dist(jog.x, jog.y, vetorX[i], vetorY[i]) < jog.raio + vetorDist[i]){
+        jog.x = 200;
+        jog.y = 300;
+        info.vidas--;
+      };
+  };
+  fill(0,200,200);
+  //ellipse(jog.x, jog.y, jog.raio, jog.raio);
+  imageMode(CENTER);
+  image(imgJog, jog.x, jog.y);
+  if(keyIsDown(RIGHT_ARROW)){
+    jog.x = jog.x + 2;
+  };
+  if(keyIsDown(LEFT_ARROW)){
+    jog.x = jog.x - 2;
+  };
+  if(keyIsDown(UP_ARROW)){
+    jog.y = jog.y - 2;
+  };
+  if(keyIsDown(DOWN_ARROW)){
+    jog.y = jog.y + 2;
+  };
+  
+  //Disparo do jogador 
+  /*
+  if(keyIsDown(CONTROL) && estadoDisp == false){
+    disp.x = jog.x;
+    disp.y = jog.y;
+    estadoDisp = true;
+  };
+  
+  if(estadoDisp == true){
+    ellipse(disp.x, disp.y, disp.raio, disp.raio);
+    disp.y = disp.y - 8;
+    if(disp.y < 0){
+      estadoDisp = false;
+    };
+  };
+  */
+  
+  //Informações do jogo
+  fill(0,0,0);
+  textSize(18);
+  text("Nível: " + info.nivel, 5, 20);
+  text("Pontos: " + info.pontos, 150,20);
+  text("Vidas: " + info.vidas, 330, 20);
+  info.pontos = info.pontos + 1;
+  if(info.pontos > info.barreiraPontos){
+    info.nivel++;
+    info.barreiraPontos = info.barreiraPontos + 1500;
+  };
+};
